@@ -17,6 +17,7 @@
       }
 
       .todo-container {
+        position: relative;
         width: 400px;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -69,6 +70,9 @@
       .todo-item-text {
         flex-grow: 1;
         margin-left: 10px;
+        color: #008445;
+        font-size: 1.5rem;
+        text-transform: capitalize;
       }
 
       .todo-item-actions {
@@ -77,8 +81,19 @@
       }
 
       .todo-item-delete {
-        color: #dc3545;
-        cursor: pointer;
+        padding: 8px 16px;
+        background-color: #ff007b;
+        border: none;
+        border-radius: 3px;
+        color: white;
+        margin-left: 10px;
+      }
+      .todo-item-edit {
+        padding: 8px 16px;
+        background-color: #00ced1;
+        border: none;
+        border-radius: 3px;
+        color: white;
         margin-left: 10px;
       }
 
@@ -86,10 +101,36 @@
         text-decoration: line-through;
         opacity: 0.5;
       }
+
+      .border-animation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        animation: border-pulse 1s infinite;
+      }
+
+      @keyframes border-pulse {
+        0% {
+          border-color: rgba(0, 123, 255, 0.5);
+        }
+        50% {
+          border-color: rgba(0, 123, 255, 0.8);
+        }
+        100% {
+          border-color: rgba(0, 123, 255, 0.5);
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="todo-container">
+    <div class="todo-container" id="todo-container">
+      <div class="border-animation"></div>
+      <h1 style="text-align: center">Todo Task</h1>
       <div class="todo-header">
         <input
           type="text"
@@ -107,10 +148,26 @@
       const addTodoButton = document.getElementById("add-todo");
       const todoList = document.getElementById("todo-list");
 
+      todoInput.addEventListener("keydown", (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          addTodoButton.click();
+        }
+      });
+
       addTodoButton.addEventListener("click", () => {
         const todoText = todoInput.value.trim();
-        if (todoText) {
-          addTodoItem(todoText);
+        // if (todoText) {
+        //   addTodoItem(todoText);
+        //   todoInput.value = "";
+        // }
+        // todoText && addTodoItem(todoText);
+        // todoInput.value = "";
+        // todoText === "" && alert("Task can't be empty...");
+        if (todoText === "") {
+          alert("Task can't be empty...");
+        } else {
+          todoText && addTodoItem(todoText);
           todoInput.value = "";
         }
       });
