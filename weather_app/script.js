@@ -1,4 +1,5 @@
-const apiKey = "d608caefdc4fdddbdec602dc5addf830";
+import { apiKey } from "./config.mjs";
+
 const searchBox = document.getElementById("search-box");
 const searchButton = document.getElementById("search-button");
 const weatherInfo = document.getElementById("weather-info");
